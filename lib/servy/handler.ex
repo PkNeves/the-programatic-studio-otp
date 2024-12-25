@@ -1,4 +1,6 @@
 defmodule Servy.Handler do
+  require Logger
+
   def handle(request) do
     request
     |> parse()
@@ -27,7 +29,7 @@ defmodule Servy.Handler do
   def prettier_path(conv), do: conv
 
   def track(%{status: 404, path: path} = conv) do
-    IO.puts("Warning: #{path} is on the loose!")
+    Logger.warn("#{path} is on the loose!")
     conv
   end
 
