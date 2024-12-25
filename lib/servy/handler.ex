@@ -7,8 +7,15 @@ defmodule Servy.Handler do
     |> log()
     |> route()
     |> track()
+    |> emojify()
     |> format_response()
   end
+
+  def emojify(%{status: 200} = conv) do
+    %{conv | resp_body: "🎉" <> conv.resp_body <> "🎉"}
+  end
+
+  def emojify(conv), do: conv
 
   def prettier_path(%{path: path} = conv) do
     case String.split(path, "?") do
@@ -68,7 +75,7 @@ defmodule Servy.Handler do
     """
     HTTP/1.1 #{conv.status} #{status_reason(conv.status)}
     Content-Type: text/html
-    Content-Length: #{String.length(conv.resp_body)}
+    Content-Length: #{byte_size(conv.resp_body)}
 
     #{conv.resp_body}
     """
