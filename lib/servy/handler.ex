@@ -67,6 +67,24 @@ defmodule Servy.Handler do
   def route(%{method: "GET", path: "/bears/" <> id} = conv),
     do: %{conv | status: 200, resp_body: "Bear #{id}"}
 
+  def route(%{method: "GET", path: "/about"} = conv) do
+    file =
+      "../../pages"
+      |> Path.expand(__DIR__)
+      |> Path.join("about.html")
+
+    case File.read(file) do
+      {:error, :enoent} ->
+        %{conv | status: 404, resp_body: "File not fount"}
+
+      {:error, reason} ->
+        %{conv | status: 500, resp_body: "File error: #{reason}"}
+
+      {:ok, content} ->
+        %{conv | status: 200, resp_body: content}
+    end
+  end
+
   def route(%{method: "DELETE", path: "/bears/" <> _id} = conv),
     do: %{conv | status: 403, resp_body: "Deleting a bear is forbidden"}
 
@@ -163,6 +181,17 @@ IO.puts(response)
 
 request = """
 GET /bears?id=1 HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response = Servy.Handler.handle(request)
+IO.puts(response)
+
+request = """
+GET /about HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
