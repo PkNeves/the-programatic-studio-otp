@@ -38,16 +38,18 @@ defmodule Servy.Handler do
   """
   @pages_path Path.expand("../../pages", __DIR__)
 
+  import Servy.Plugins, only: [rewrite_path: 1, prettier_path: 1, log: 1, track: 1, emojify: 1]
+
   @doc "Transform the request into a response"
   def handle(request) do
     request
     |> parse()
-    |> Servy.Plugins.prettier_path()
-    |> Servy.Plugins.rewrite_path()
-    |> Servy.Plugins.log()
+    |> prettier_path()
+    |> rewrite_path()
+    |> log()
     |> route()
-    |> Servy.Plugins.track()
-    |> Servy.Plugins.emojify()
+    |> track()
+    |> emojify()
     |> format_response()
   end
 
