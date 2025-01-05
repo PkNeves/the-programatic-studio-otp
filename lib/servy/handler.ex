@@ -7,6 +7,7 @@ defmodule Servy.Handler do
   import Servy.Plugins, only: [rewrite_path: 1, prettier_path: 1, log: 1, track: 1, emojify: 1]
   import Servy.Parser, only: [parse: 1]
   import Servy.HandleFile, only: [handle_file: 2]
+  alias Servy.Conv
 
   @doc "Transform the request into a response"
   def handle(request) do
@@ -21,30 +22,30 @@ defmodule Servy.Handler do
     |> format_response()
   end
 
-  def route(%{method: "GET", path: "/pages/" <> page} = conv) do
+  def route(%Conv{method: "GET", path: "/pages/" <> page} = conv) do
     @pages_path
     |> Path.join(page <> ".html")
     |> File.read()
     |> handle_file(conv)
   end
 
-  def route(%{method: "GET", path: "/wildthings"} = conv),
+  def route(%Conv{method: "GET", path: "/wildthings"} = conv),
     do: %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
 
-  def route(%{method: "GET", path: "/bears"} = conv),
+  def route(%Conv{method: "GET", path: "/bears"} = conv),
     do: %{conv | status: 200, resp_body: "Teddy, Smokey, Paddington"}
 
-  def route(%{method: "GET", path: "/bears/new"} = conv) do
+  def route(%Conv{method: "GET", path: "/bears/new"} = conv) do
     @pages_path
     |> Path.join("form.html")
     |> File.read()
     |> handle_file(conv)
   end
 
-  def route(%{method: "GET", path: "/bears/" <> id} = conv),
+  def route(%Conv{method: "GET", path: "/bears/" <> id} = conv),
     do: %{conv | status: 200, resp_body: "Bear #{id}"}
 
-  def route(%{method: "GET", path: "/about"} = conv) do
+  def route(%Conv{method: "GET", path: "/about"} = conv) do
     file =
       "../../pages"
       |> Path.expand(__DIR__)
@@ -53,13 +54,13 @@ defmodule Servy.Handler do
       |> handle_file(conv)
   end
 
-  def route(%{method: "DELETE", path: "/bears/" <> _id} = conv),
+  def route(%Conv{method: "DELETE", path: "/bears/" <> _id} = conv),
     do: %{conv | status: 403, resp_body: "Deleting a bear is forbidden"}
 
-  def route(%{path: path} = conv),
+  def route(%Conv{path: path} = conv),
     do: %{conv | status: 404, resp_body: "No #{path} here!"}
 
-  def format_response(conv) do
+  def format_response(%Conv{} = conv) do
     """
     HTTP/1.1 #{conv.status} #{status_reason(conv.status)}
     Content-Type: text/html
