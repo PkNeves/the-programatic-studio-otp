@@ -10,8 +10,14 @@ defmodule Servy.Plugins do
 
   def prettier_path(%Conv{path: path} = conv) do
     case String.split(path, "?") do
-      [_] -> conv
-      [path, id] -> %{conv | path: path <> "/" <> id}
+      [_] ->
+        conv
+
+      [path, id] ->
+        case String.split(id, "=") do
+          [key, value] ->
+            %{conv | path: path <> "/" <> value}
+        end
     end
   end
 
