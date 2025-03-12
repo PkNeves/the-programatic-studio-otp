@@ -16,4 +16,21 @@ defmodule Servy.Recurse do
   end
 
   def triple([], return), do: return
+
+  def my_map(list, function, acc \\ [])
+
+  def my_map([head | tail], function, acc) do
+    return = function.(head)
+    my_map(tail, function, acc ++ [return])
+  end
+
+  def my_map([], _, acc) do
+    acc
+  end
+
+  def my_map2([head | tail], fun) do
+    [fun.(head) | my_map(tail, fun)]
+  end
+
+  def my_map2([], _fun), do: []
 end
