@@ -30,13 +30,8 @@ defmodule Servy.HandlerTest do
 
       """
 
-      assert """
-             HTTP/1.1 200 OK
-             Content-Type: text/html
-             Content-Length: 44
-
-             🎉<ul><li>Scarface - Grizzly</li></ul>🎉
-             """ = Servy.Handler.handle(request)
+      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 57\n\n🎉<ul>\n  \n    <li>Scarface - Grizzly</li>\n  \n</ul>\n🎉\n" =
+               Servy.Handler.handle(request)
     end
 
     test "should not found route GET bigfoot" do
