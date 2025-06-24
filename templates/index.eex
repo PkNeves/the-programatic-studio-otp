@@ -1,5 +1,5 @@
 <ul>
-  <%= Enum.map(bears, fn(bear) -> %>
+  <%= for bear <- bears do %>
     <li><%= bear.name %> - <%= bear.type %></li>
-  <%= end) %>
+  <%= end %>
 </ul>
