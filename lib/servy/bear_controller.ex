@@ -2,6 +2,8 @@ defmodule Servy.BearController do
   alias Servy.Wildthings
   alias Servy.Bear
 
+  @template_path Path.expand("../../templates", __DIR__)
+
   def bear_item(bear) do
     "<li>#{bear.name} - #{bear.type}</li>"
   end
