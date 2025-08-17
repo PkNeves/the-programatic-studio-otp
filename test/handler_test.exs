@@ -140,13 +140,17 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 328
+             Content-Length: 335
 
              🎉<h1>Clark's Wildthings Refuge</h1>
 
              <blockquote>
-               When we contemplate the whole globe as one great dewdrop, stripe and dotted with continents and islands, flying through space with other stars all signing and shining together as one, the whole universe appears as an infinite storm of beauty. -- John Muir
-             </blockquote>🎉
+               When we contemplate the whole globe as one great dewdrop, stripe and dotted
+               with continents and islands, flying through space with other stars all signing
+               and shining together as one, the whole universe appears as an infinite storm
+               of beauty. -- John Muir
+             </blockquote>
+             🎉
              """ = Servy.Handler.handle(request)
     end
 
@@ -162,21 +166,22 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 239
+             Content-Length: 248
 
              🎉<form action=\"/bears\" method=\"POST\">
                <p>
-                 Name:<br/>
-                 <input type=\"text\" name=\"name\">
+                 Name:<br />
+                 <input type=\"text\" name=\"name\" />
                </p>
                <p>
-                 Type:<br/>
-                 <input type=\"text\" name=\"type\">
+                 Type:<br />
+                 <input type=\"text\" name=\"type\" />
                </p>
                <p>
-                 <input type=\"submit\" value=\"Create Bear\">
+                 <input type=\"submit\" value=\"Create Bear\" />
                </p>
-             </form>🎉
+             </form>
+             🎉
              """ = Servy.Handler.handle(request)
     end
 
@@ -192,9 +197,10 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 26
+             Content-Length: 25
 
-             🎉<h1> Contact </h1>🎉
+             🎉<h1>Contact</h1>
+             🎉
              """ = Servy.Handler.handle(request)
     end
 
