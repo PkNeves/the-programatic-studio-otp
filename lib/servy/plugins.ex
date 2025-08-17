@@ -15,7 +15,7 @@ defmodule Servy.Plugins do
 
       [path, id] ->
         case String.split(id, "=") do
-          [key, value] ->
+          [_key, value] ->
             %{conv | path: path <> "/" <> value}
         end
     end
