@@ -15,7 +15,7 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 28
+             Content-Length: 22
 
              🎉Bears, Lions, Tigers🎉
              """ = Servy.Handler.handle(request)
@@ -30,7 +30,7 @@ defmodule Servy.HandlerTest do
 
       """
 
-      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 57\n\n🎉<ul>\n  \n    <li>Scarface - Grizzly</li>\n  \n</ul>\n🎉\n" =
+      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 51\n\n🎉<ul>\n  \n    <li>Scarface - Grizzly</li>\n  \n</ul>\n🎉\n" =
                Servy.Handler.handle(request)
     end
 
@@ -64,7 +64,7 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 75
+             Content-Length: 69
 
              🎉<h1>Show Bear</h1>
              <p>Teddy hibernating? <strong>true</strong></p>
@@ -120,7 +120,7 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 75
+             Content-Length: 69
 
              🎉<h1>Show Bear</h1>
              <p>Teddy hibernating? <strong>true</strong></p>
@@ -140,7 +140,7 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 335
+             Content-Length: 329
 
              🎉<h1>Clark's Wildthings Refuge</h1>
 
@@ -166,7 +166,7 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 248
+             Content-Length: 242
 
              🎉<form action=\"/bears\" method=\"POST\">
                <p>
@@ -197,7 +197,7 @@ defmodule Servy.HandlerTest do
       assert """
              HTTP/1.1 200 OK
              Content-Type: text/html
-             Content-Length: 25
+             Content-Length: 19
 
              🎉<h1>Contact</h1>
              🎉
@@ -254,7 +254,7 @@ defmodule Servy.HandlerTest do
 
       """
 
-      assert "HTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 254\n\n🎉[{\"hibernating\":true,\"type\":\"Brown\",\"name\":\"Teddy\",\"id\":1},{\"hibernating\":false,\"type\":\"Black\",\"name\":\"Smokey\",\"id\":2},{\"hibernating\":false,\"type\":\"Brown\",\"name\":\"Paddington\",\"id\":3},{\"hibernating\":true,\"type\":\"Grizzly\",\"name\":\"Scarface\",\"id\":4}]🎉\n" =
+      assert "HTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 248\n\n🎉[{\"hibernating\":true,\"type\":\"Brown\",\"name\":\"Teddy\",\"id\":1},{\"hibernating\":false,\"type\":\"Black\",\"name\":\"Smokey\",\"id\":2},{\"hibernating\":false,\"type\":\"Brown\",\"name\":\"Paddington\",\"id\":3},{\"hibernating\":true,\"type\":\"Grizzly\",\"name\":\"Scarface\",\"id\":4}]🎉\n" =
                Servy.Handler.handle(request)
     end
   end

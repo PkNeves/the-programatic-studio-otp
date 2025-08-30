@@ -20,7 +20,13 @@ defmodule Servy.Handler do
     |> route()
     |> track()
     |> emojify()
+    |> put_content_length()
     |> format_response()
+  end
+
+  defp put_content_length(conv) do
+    headers = Map.put(conv.resp_headers, "Content-Length", String.length(conv.resp_body))
+    %{conv | resp_headers: headers}
   end
 
   def route(%Conv{method: "GET", path: "/pages/" <> page} = conv) do
@@ -72,11 +78,24 @@ defmodule Servy.Handler do
   def format_response(%Conv{} = conv) do
     """
     HTTP/1.1 #{Conv.full_status(conv)}
-    Content-Type: #{conv.resp_content_type}
-    Content-Length: #{byte_size(conv.resp_body)}
+    #{format_response_headers(conv)}
 
     #{conv.resp_body}
     """
+  end
+
+  defp format_response_headers(%{resp_headers: headers}) do
+    # Enum.map(headers, fn {key, value} -> "#{key}: #{value}" end)
+    # |> Enum.sort()
+    # |> Enum.reverse()
+    # |> Enum.join("\n")
+
+    for {key, value} <- headers do
+      "#{key}: #{value}"
+    end
+    |> Enum.sort()
+    |> Enum.reverse()
+    |> Enum.join("\n")
   end
 end
 
