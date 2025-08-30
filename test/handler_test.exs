@@ -257,5 +257,28 @@ defmodule Servy.HandlerTest do
       assert "HTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 248\n\n🎉[{\"hibernating\":true,\"type\":\"Brown\",\"name\":\"Teddy\",\"id\":1},{\"hibernating\":false,\"type\":\"Black\",\"name\":\"Smokey\",\"id\":2},{\"hibernating\":false,\"type\":\"Brown\",\"name\":\"Paddington\",\"id\":3},{\"hibernating\":true,\"type\":\"Grizzly\",\"name\":\"Scarface\",\"id\":4}]🎉\n" =
                Servy.Handler.handle(request)
     end
+
+    test "POST /api/bears" do
+      request = """
+      POST /api/bears HTTP/1.1
+      Host: example.com
+      User-Agent: ExampleBrowser/1.0
+      Accept: */*
+      Content-Type: application/json
+      Content-Length: 21
+
+      {"name": "Breezly", "type": "Polar"}
+      """
+
+      response = Servy.Handler.handle(request)
+
+      assert response == """
+             HTTP/1.1 201 Created
+             Content-Type: text/html
+             Content-Length: 35
+
+             Created a Polar bear named Breezly!
+             """
+    end
   end
 end
