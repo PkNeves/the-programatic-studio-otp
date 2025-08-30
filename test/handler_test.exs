@@ -244,5 +244,18 @@ defmodule Servy.HandlerTest do
              Created a Brown bear name Boloo
              """ = Servy.Handler.handle(request)
     end
+
+    test "test json" do
+      request = """
+      GET /api/bears HTTP/1.1
+      Host: example.com
+      User-Agent: ExampleBrowser/1.0
+      Accept: */*
+
+      """
+
+      assert "HTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 254\n\n🎉[{\"hibernating\":true,\"type\":\"Brown\",\"name\":\"Teddy\",\"id\":1},{\"hibernating\":false,\"type\":\"Black\",\"name\":\"Smokey\",\"id\":2},{\"hibernating\":false,\"type\":\"Brown\",\"name\":\"Paddington\",\"id\":3},{\"hibernating\":true,\"type\":\"Grizzly\",\"name\":\"Scarface\",\"id\":4}]🎉\n" =
+               Servy.Handler.handle(request)
+    end
   end
 end
