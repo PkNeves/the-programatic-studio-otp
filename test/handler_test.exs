@@ -12,13 +12,8 @@ defmodule Servy.HandlerTest do
 
       """
 
-      assert """
-             HTTP/1.1 200 OK
-             Content-Type: text/html
-             Content-Length: 22
-
-             🎉Bears, Lions, Tigers🎉
-             """ = Servy.Handler.handle(request)
+      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 2\n\n🎉🎉\n" =
+               Servy.Handler.handle(request)
     end
 
     test "should run a GET bears" do
@@ -30,7 +25,7 @@ defmodule Servy.HandlerTest do
 
       """
 
-      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 51\n\n🎉<ul>\n  \n    <li>Scarface - Grizzly</li>\n  \n</ul>\n🎉\n" =
+      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 116\n\n🎉<ul>\n  \n    <li>Brutus - Grizzly</li>\n  \n    <li>Kenai - Grizzly</li>\n  \n    <li>Scarface - Grizzly</li>\n  \n</ul>\n🎉\n" =
                Servy.Handler.handle(request)
     end
 
@@ -254,7 +249,7 @@ defmodule Servy.HandlerTest do
 
       """
 
-      assert "HTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 248\n\n🎉[{\"hibernating\":true,\"type\":\"Brown\",\"name\":\"Teddy\",\"id\":1},{\"hibernating\":false,\"type\":\"Black\",\"name\":\"Smokey\",\"id\":2},{\"hibernating\":false,\"type\":\"Brown\",\"name\":\"Paddington\",\"id\":3},{\"hibernating\":true,\"type\":\"Grizzly\",\"name\":\"Scarface\",\"id\":4}]🎉\n" =
+      assert "HTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 607\n\n🎉[{\"hibernating\":true,\"type\":\"Brown\",\"name\":\"Teddy\",\"id\":1},{\"hibernating\":false,\"type\":\"Black\",\"name\":\"Smokey\",\"id\":2},{\"hibernating\":false,\"type\":\"Brown\",\"name\":\"Paddington\",\"id\":3},{\"hibernating\":true,\"type\":\"Grizzly\",\"name\":\"Scarface\",\"id\":4},{\"hibernating\":false,\"type\":\"Polar\",\"name\":\"Snow\",\"id\":5},{\"hibernating\":false,\"type\":\"Grizzly\",\"name\":\"Brutus\",\"id\":6},{\"hibernating\":true,\"type\":\"Black\",\"name\":\"Rosie\",\"id\":7},{\"hibernating\":false,\"type\":\"Panda\",\"name\":\"Roscoe\",\"id\":8},{\"hibernating\":true,\"type\":\"Polar\",\"name\":\"Iceman\",\"id\":9},{\"hibernating\":false,\"type\":\"Grizzly\",\"name\":\"Kenai\",\"id\":10}]🎉\n" =
                Servy.Handler.handle(request)
     end
 
