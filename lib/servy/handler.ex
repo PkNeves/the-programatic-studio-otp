@@ -29,6 +29,19 @@ defmodule Servy.Handler do
     %{conv | resp_headers: headers}
   end
 
+  def route(%Conv{method: "GET", path: "/pages/faq" <> page} = conv) do
+    @pages_path
+    |> Path.join(page <> ".md")
+    |> File.read()
+    |> handle_file(conv)
+    |> markdown_to_html()
+  end
+
+  defp markdown_to_html(%Conv{status: 200} = conv),
+    do: %{conv | resp_body: Earmark.as_html!(conv.resp_body)}
+
+  defp markdown_to_html(%Conv{} = conv), do: conv
+
   def route(%Conv{method: "GET", path: "/pages/" <> page} = conv) do
     @pages_path
     |> Path.join(page <> ".html")
@@ -68,6 +81,14 @@ defmodule Servy.Handler do
     do: BearController.delete(conv)
 
   def route(%Conv{method: "GET", path: "/about"} = conv) do
+    "../../pages"
+    |> Path.expand(__DIR__)
+    |> Path.join("about.html")
+    |> File.read()
+    |> handle_file(conv)
+  end
+
+  def route(%Conv{method: "GET", path: "/pages/faq"} = conv) do
     "../../pages"
     |> Path.expand(__DIR__)
     |> Path.join("about.html")

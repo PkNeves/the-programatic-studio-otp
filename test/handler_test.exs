@@ -12,7 +12,7 @@ defmodule Servy.HandlerTest do
 
       """
 
-      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 2\n\n🎉🎉\n" =
+      assert "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 22\n\n🎉Bears, Lions, Tigers🎉\n" =
                Servy.Handler.handle(request)
     end
 
